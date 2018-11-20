@@ -1,0 +1,69 @@
+本次项目主要以分析七个模块的数据，分别为
+用户基本信息分析、浏览器分析、地域信息分析、
+用户浏览深度分析、外链数据分析、订单信息分析以及事件分析
+第一步: etl数据清洗
+第二步: 基础维度类编写 StatsLocationDimension  LocationDimension
+第三步: service服务,implement
+第四步: 写model.value里面的map和reduce
+
+NewUser 和 TotalUser
+计算规则:
+  new_install_user计算规则：计算launch事件中，uuid的唯一个数。
+  total_user计算规则：同一个维度，前一天的总用户+当天新增用户。(只按照天来统计数据，但是提供按照其他时间维度统计的方式)
+  最终数据保存：stats_user和stats_device_browser。
+  涉及到的列(除了维度列和created列外)：new_install_users和total_install_users。
+  涉及到其他表有dimension_platform、dimension_date、dimension_browser。
+
+编码步骤:
+1、定义维度信息表对应的顶级父类。
+2、指定数据库连接信息指定，搭建DimensionConverter获取维度id的类框架，根据具体的分析到时候再添加内容。
+3、搭建自定义OutputFormat和OutputCollector类框架。
+4、实现统计new_install_user的用户数
+   a. 自定义platform、date、browser维度类，以及操作这些类的工具类。
+   b. 实现MR
+5、实现统计total_user的用户数。
+6、测试
+----------------------------------------------------------------------------
+active_user
+   active_user计算规则：当天所有数据中，uuid的去重个数。
+  最终数据保存：stats_user和stats_device_browser。
+  涉及到的列(除了维度列和created列外)：active_users。
+  涉及到其他表有dimension_platform、dimension_date、dimension_browser。
+
+编码步骤:
+1、编写mapper相关类
+2、编写reduce相关类
+3、编写入口类
+4、编写collector类和给定输出配置(xml).
+5、测试
+------------------------------------------------------------------------------
+new_member
+计算规则:
+新会员(new_member)计算规则：计算当天(由维度信息确定)的所有数据中的member id，
+要求member id以前没有访问过网站(在日志收集模块上线后没法访问过)，
+统计这部分的member id格式作为新会员的数量值。所有要求我们保存member id到某个数据库中，
+在这里有两种比较好的方法，第一种将会员信息保存到hbase中，以会员id作为rowkey，这样方式方便获取。
+第二种将会员信息保存到mysql中，以会员id作为主键，这种方式方便存储。这里采用第二种方式。
+最终数据保存：stats_user和stats_device_browser。涉及到的列(除了维度列和created列外)：new_members。
+涉及到其他表有dimension_platform、dimension_date、dimension_browser。
+------------------------------------------------------------------------------------------
+活跃会员:
+总述:活跃会员的统计和活跃用户统计类似，区别只是在于从不同的角度来进行分析访问网站的用户数量。
+活跃用户统计是根据我们在cookie中保存的uuid来进行访问网站用户数量的一个统计，而活跃会员统计是
+通过统计登录网站的用户数量(去重)。一般而言，如果活跃用户的数量远远超过活跃会员数量，
+那么表示本网站对会员的吸引能力不够。
+
+计算规则:
+活跃会员(active_member)计算规则：计算当天(确定时间维度信息)的pageview事件的数据中memberid的去重个数.
+(这里只所以选择pageview事件，是可能会存在一种可能：某个会员在当天没有进行任何操作，但是他订单支付
+成功的操作在今天在被触发，这样在所有数据中就会出现一个java_server平台产生的订单支付成功事件，包含会员id)。
+  最终数据保存：stats_user和stats_device_browser。涉及到的列(除了维度列和created列外)：active_members。
+  涉及到其他表有dimension_platform、dimension_date、dimension_browser。
+------------------------------------------------------------------------------------------
+总会员计算规则:
+总会员(total_member)计算规则：前一天的总会员+今天的新增会员作为今天的总会员数。
+如果是计算月维度的总会员，那么就是拿上个月这个维度的总会员 + 这个月维度下的新增会员
+作为这个月维度下的总会员。实现方式类似total_users的计算。
+  最终数据保存：stats_user和stats_device_browser。涉及到的列(除了维度列和created列外)：total_members。
+  涉及到其他表有dimension_platform、dimension_date、dimension_browser。
+------------------------------------------------------------------------------------------
