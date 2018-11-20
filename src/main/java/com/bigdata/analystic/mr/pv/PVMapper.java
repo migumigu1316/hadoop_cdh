@@ -7,7 +7,6 @@ import com.bigdata.analystic.model.base.DateDimension;
 import com.bigdata.analystic.model.base.KpiDimension;
 import com.bigdata.analystic.model.base.PlatformDimension;
 import com.bigdata.analystic.model.value.map.TimeOutputValue;
-import com.bigdata.common.Constants.EventEnum;
 import com.bigdata.common.DateEnum;
 import com.bigdata.common.KpiType;
 import org.apache.commons.lang.StringUtils;
@@ -51,32 +50,38 @@ public class PVMapper extends Mapper<LongWritable, Text, StatsUserDimension, Tim
             //获取想要的字段
             String serverTime = fields[1];
             String platform = fields[13];//平台
-            String pv = fields[10];//pv的url
+            String url = fields[10];//pv的url
             String browserName = fields[24];//浏览器名字
             String browserVersion = fields[25];//浏览器版本
 
-            if (StringUtils.isEmpty(serverTime) || StringUtils.isEmpty(pv)) {
-                logger.info("serverTime & pv is null serverTime:" + serverTime + ".pv" + pv);
+            if (StringUtils.isEmpty(serverTime) || StringUtils.isEmpty(url)) {
+                logger.info("serverTime & url is null serverTime:" + serverTime + ".url" + url);
                 return;
             }
 
-            //构造输出的key
+            //构造输出的value
             long stime = Long.valueOf(serverTime);//时间
+            this.v.setId(url);
+            this.v.setTime(stime);
+
+            //构造输出的key
             PlatformDimension platformDimension = PlatformDimension.getInstance(platform);//平台
             DateDimension dateDimension = DateDimension.buildDate(stime, DateEnum.DAY);
             StatsCommonDimension statsCommonDimension = this.k.getStatsCommonDimension();
-            //为StatsCommonDimension设值
+
+            //为StatsCommonDimension(公共维度)设值,
             statsCommonDimension.setDateDimension(dateDimension);
             statsCommonDimension.setPlatformDimension(platformDimension);
 
-//            //用户pv
-//            //设置默认的浏览器对象(因为活跃用户指标并不需要浏览器维度，所以赋值为空)
-//            BrowserDimension defaultBrowserDimension = new BrowserDimension("", "");
-//            statsCommonDimension.setKpiDimension(pvKpi);
-//            this.k.setBrowserDimension(defaultBrowserDimension);
-//            this.k.setStatsCommonDimension(statsCommonDimension);
-//            this.v.setId(pv);
-//            context.write(this.k, this.v);//输出
+            //用户pv
+            //设置默认的浏览器对象
+            BrowserDimension defaultBrowserDimension = new BrowserDimension("", "");
+            statsCommonDimension.setKpiDimension(pvKpi);
+            this.k.setBrowserDimension(defaultBrowserDimension);
+            this.k.setStatsCommonDimension(statsCommonDimension);
+
+            context.write(this.k, this.v);//输出
+//        System.out.println("用户" + k + "---------" + v);
 
             //浏览器pv
             statsCommonDimension.setKpiDimension(BrowserPvKpi);
@@ -84,6 +89,7 @@ public class PVMapper extends Mapper<LongWritable, Text, StatsUserDimension, Tim
             this.k.setBrowserDimension(browserDimension);
             this.k.setStatsCommonDimension(statsCommonDimension);
             context.write(this.k, this.v);//输出
+//        System.out.println("浏览器" + k + "---------" + v);
 
     }
 }

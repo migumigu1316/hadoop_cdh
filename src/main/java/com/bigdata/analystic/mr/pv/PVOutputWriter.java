@@ -25,8 +25,7 @@ public class PVOutputWriter implements IOutputWriter {
 
     @Override
     //这里通过key和value给ps语句赋值
-    public void output(Configuration conf, StatsBaseDimension key,
-                       StatsOutputValue value, PreparedStatement ps, IDimension iDimension) {
+    public void output(Configuration conf, StatsBaseDimension key, StatsOutputValue value, PreparedStatement ps, IDimension iDimension) {
 
         try {
             StatsUserDimension k = (StatsUserDimension) key;
