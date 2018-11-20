@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+<property>
+	<!-- 指定HDFS存储数据的副本数目，默认情况下是3份-->
+	<name>dfs.replication</name>
+	<value>1</value>
+</property>
+<property>
+	<name>dfs.namenode.name.dir</name>
+	<value>/home/hadoop/develop_env/hadoop-2.6.0-cdh5.13.2/hdfs/name</value>
+</property>
+<property>
+	<name>dfs.namenode.data.dir</name>
+	<value>/home/hadoop/develop_env/hadoop-2.6.0-cdh5.13.2/hdfs/data</value>
+</property>
+<property>
+	<name>dfs.permissions.enabled</name>
+	<value>false</value>
+</property>
+<property>
+    <name>hadoop.proxyuser.hadoop.hosts</name>
+    <value>*</value>
+</property>
+<property>
+    <name>hadoop.proxyuser.hadoop.groups</name>
+    <value>*</value>
+</property>
+</configuration>

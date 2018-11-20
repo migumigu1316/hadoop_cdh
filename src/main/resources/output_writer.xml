@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <property>
+        <!-- 新增 用户/浏览器用户 写出 -->
+        <name>writer_new_user</name>
+        <value>com.bigdata.analystic.mr.nu.NewUserOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 浏览器新增写出 -->
+        <name>writer_browser_new_user</name>
+        <!--<value>com.bigdata.analystic.mr.nu.BrowserNewUserOutputWriter</value>-->
+        <value>com.bigdata.analystic.mr.nu.NewUserOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 活跃 浏览器/用户 写出 -->
+        <name>writer_active_user</name>
+        <value>com.bigdata.analystic.mr.au.ActiveUserOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 浏览器活跃用户写出 -->
+        <name>writer_browser_active_user</name>
+        <!--<value>com.bigdata.analystic.mr.au.BrowserActiveUserOutputWriter</value>-->
+        <value>com.bigdata.analystic.mr.au.ActiveUserOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 浏览器/用户 活跃会员写出 -->
+        <name>writer_active_member</name>
+        <value>com.bigdata.analystic.mr.am.ActiveMemberOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 浏览器活跃会员写出,合并到 ActiveMemberOutputWriter-->
+        <name>writer_browser_active_member</name>
+        <!--<value>com.bigdata.analystic.mr.am.BrowserActiveMemberOutputWriter</value>-->
+        <value>com.bigdata.analystic.mr.am.ActiveMemberOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 新增会员/浏览器新增会员 写出 -->
+        <name>writer_new_member</name>
+        <value>com.bigdata.analystic.mr.nm.NewMemberOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 浏览器新增会员写出 -->
+        <name>writer_browser_new_member</name>
+        <value>com.bigdata.analystic.mr.nm.NewMemberOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 会员信息写出 -->
+        <name>writer_member_info</name>
+        <value>com.bigdata.analystic.mr.nm.NewMemberOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 用户会话 -->
+        <name>writer_session</name>
+        <value>com.bigdata.analystic.mr.session.SessionOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 浏览器会话 -->
+        <name>writer_browser_session</name>
+        <value>com.bigdata.analystic.mr.session.SessionOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 时长 -->
+        <name>writer_hourly_active_user</name>
+        <value>com.bigdata.analystic.mr.au.ActiveUserOutputWriter</value>
+    </property>
+
+    <property>
+        <!-- 地区 -->
+        <name>writer_local</name>
+        <value>com.bigdata.analystic.mr.local.LocalOutputWriter</value>
+    </property>
+
+</configuration>
