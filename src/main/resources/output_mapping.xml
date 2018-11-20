@@ -180,4 +180,29 @@
         </value>
     </property>
 
+    <property>
+        <!-- 用户pv -->
+        <name>pageview</name>
+        <value>insert into `stats_user`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `pv`,
+            `created`)
+            values(?,?,?,?) on duplicate key update `pv` = ?
+        </value>
+    </property>
+
+    <property>
+        <!-- 浏览器pv -->
+        <name>browser_pageview</name>
+        <value>insert into `stats_device_browser`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `browser_dimension_id`,
+            `pv`,
+            `created`)
+            values(?,?,?,?,?) on duplicate key update `pv` = ?
+        </value>
+    </property>
+
 </configuration>

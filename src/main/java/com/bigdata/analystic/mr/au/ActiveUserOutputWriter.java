@@ -72,6 +72,7 @@ public class ActiveUserOutputWriter implements IOutputWriter {
                     }
                     break;
             }
+
             ps.addBatch();//添加到批处理中，批量执行SQL语句
         } catch (Exception e) {
             e.printStackTrace();

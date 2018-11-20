@@ -7,30 +7,30 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class LogWritable implements Writable {
-    private String ver;
+    private String ver;//版本号, eg: 0.0.1
     private String s_time;
-    private String en;
-    private String u_ud;
-    private String u_mid;
-    private String u_sd;
-    private String c_time;
-    private String l;
-    private String b_iev;
-    private String b_rst;
-    private String p_url;
-    private String p_ref;
-    private String tt;
-    private String pl;
+    private String en;//事件名称, eg: e_pv
+    private String u_ud;//用户/访客唯一标识符
+    private String u_mid;//会员id，和业务系统一致
+    private String u_sd;//会话id
+    private String c_time;//客户端时间
+    private String l;//客户端语言
+    private String b_iev;//浏览器信息useragent
+    private String b_rst;//浏览器分辨率，eg: 1800*678
+    private String p_url;//当前页面的url
+    private String p_ref;//上一个页面的url
+    private String tt;//当前页面的标题
+    private String pl;//平台, eg: website
     private String ip;
-    private String oid;
-    private String on;
-    private String cua;
-    private String cut;
-    private String pt;
-    private String ca;
-    private String ac;
-    private String kv_;
-    private String du;
+    private String oid;//订单id
+    private String on;//订单名称
+    private String cua;//支付金额
+    private String cut;//支付货币类型
+    private String pt;//支付方式
+    private String ca;//Event事件的Category名称
+    private String ac;//Event事件的action名称
+    private String kv_;//Event事件的自定义属性
+    private String du;//Event事件的持续时间
     private String browserName;
     private String browserVersion;
     private String osName;

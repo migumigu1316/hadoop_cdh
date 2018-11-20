@@ -83,4 +83,16 @@
         <value>com.bigdata.analystic.mr.local.LocalOutputWriter</value>
     </property>
 
+    <!--<property>-->
+        <!--&lt;!&ndash; 用户pv &ndash;&gt;-->
+        <!--<name>writer_pageview</name>-->
+        <!--<value>com.bigdata.analystic.mr.pv.PVOutputWriter</value>-->
+    <!--</property>-->
+
+    <property>
+        <!-- 浏览器pv -->
+        <name>writer_browser_pageview</name>
+        <value>com.bigdata.analystic.mr.pv.PVOutputWriter</value>
+    </property>
+
 </configuration>

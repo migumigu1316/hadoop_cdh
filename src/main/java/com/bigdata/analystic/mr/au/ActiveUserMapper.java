@@ -50,7 +50,7 @@ public class ActiveUserMapper extends Mapper<LongWritable, Text, StatsUserDimens
         String[] fields = line.split("\u0001");
         //en是事件名称
         String en = fields[2];
-        if (StringUtils.isNotEmpty(en) && en.equals(Constants.EventEnum.LANUCH.alias)) {
+
             //获取想要的字段
             String serverTime = fields[1];
             String platform = fields[13];//平台
@@ -99,6 +99,6 @@ public class ActiveUserMapper extends Mapper<LongWritable, Text, StatsUserDimens
             this.k.setStatsCommonDimension(statsCommonDimension);
             //统计浏览器的输出
             context.write(this.k, this.v);
-        }
+
     }
 }

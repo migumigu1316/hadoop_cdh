@@ -53,7 +53,7 @@ public class ActiveMemberMapper extends Mapper<LongWritable, Text, StatsUserDime
         String[] fields = line.split("\u0001");
         //pv是事件名称---pageview事件
         String en = fields[2];
-        if (StringUtils.isNotEmpty(en) && en.equals(EventEnum.PAGEVIEW.alias)) {
+        if (en.equals(EventEnum.PAGEVIEW.alias)) {
             //获取想要的字段
             String serverTime = fields[1];
             String platform = fields[13];//平台
