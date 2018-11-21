@@ -1,19 +1,17 @@
 package com.bigdata.common;
 
 /**
- * 跟日志有关的字段常量
+ * TODO 跟日志有关的字段常量
  */
 public class Constants {
-    /**
-     * 事件的枚举
-     */
+    /** 事件的枚举 */
     public enum EventEnum{
         LANUCH(1,"lanuch event","e_l"),
         PAGEVIEW(2,"pageview event","e_pv"),
         EVENT(3,"event name","e_e"),
-        CHARGEREQUEST(4,"charge request event","e_crt"),
-        CHARGESUCCESS(5,"charge success","e_cs"),
-        CHARGEREFUND(6,"charge refund","e_cr")
+        CHARGEREQUEST(4,"charge request event","e_crt"),//触发事件,用户在下订单时触发
+        CHARGESUCCESS(5,"charge success","e_cs"),//成功
+        CHARGEREFUND(6,"charge refund","e_cr")//退款
         ;
 
         public int id;

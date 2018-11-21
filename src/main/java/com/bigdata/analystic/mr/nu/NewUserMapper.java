@@ -50,6 +50,9 @@ import java.io.IOException;
  */
 
 /**
+ * TODO 计算launch事件中uuid唯一的个数,launch事件,en = e_l的事件
+ * =====>触发条件,第一次登陆,或者清空缓存
+ *
  * new_install_user计算规则：计算launch事件中，uuid的唯一个数。
  * total_user计算规则：同一个维度，前一天的总用户+当天新增用户。(只按照天来统计数据，但是提供按照其他时间维度统计的方式)
  * * 最终数据保存：stats_user和stats_device_browser。涉及到的列(除了维度列和created列外)：

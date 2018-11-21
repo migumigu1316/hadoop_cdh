@@ -4,9 +4,8 @@ import com.bigdata.common.KpiType;
 import org.apache.hadoop.io.Writable;
 
 /**
- * 封装map或者reduce阶段输出的value类型的顶级父类
  * @ClassName: StatsOutputValue
- * @Description: TODO
+ * @Description: TODO 封装map或者reduce阶段输出的value类型的顶级父类
  * @Author: xqg
  * @Date: 2018/11/3 22:08
  */

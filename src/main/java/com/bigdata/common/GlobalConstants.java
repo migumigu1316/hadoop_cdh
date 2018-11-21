@@ -1,5 +1,8 @@
 package com.bigdata.common;
 
+/**
+ * TODO 全局常量 GlobalConstants
+ */
 public class GlobalConstants {//Global(全局)Constants(常量)
     public static final String RUNNING_DATE="running_date";
 

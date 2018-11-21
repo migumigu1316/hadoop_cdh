@@ -9,11 +9,9 @@ import java.util.Objects;
 
 /**
  * @ClassName: StatsUserDimension
- * @Description: TODO
+ * @Description: TODO 可以用于用户模块和浏览器模块的map和reduce阶段的输出的key的类型
  * @Author: xqg
  * @Date: 2018/11/3 21:37
- *
- * 可以用于用户模块和浏览器模块的map和reduce阶段的输出的key的类型
  */
 
 public class StatsUserDimension extends StatsBaseDimension {

@@ -1,9 +1,8 @@
 package com.bigdata.common;
 
 /**
- * 统计指标的枚举
  * @ClassName: KpiType
- * @Description: TODO
+ * @Description: TODO 统计指标的枚举
  * @Author: xqg
  * @Date: 2018/11/3 22:12
  */

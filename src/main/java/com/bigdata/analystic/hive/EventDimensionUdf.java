@@ -22,7 +22,7 @@ public class EventDimensionUdf extends UDF {
      * @return 获取事件维度的ID
      */
     public int evaluate(String category, String action) {
-        if (StringUtils.isEmpty(category)) {
+        if (StringUtils.isEmpty(category)) {//category种类
             category = action = GlobalConstants.DEFAULT_VALUE;
         }
 

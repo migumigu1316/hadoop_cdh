@@ -23,9 +23,11 @@ public class NewUserReducer
     @Override
     protected void reduce(StatsUserDimension key, Iterable<TimeOutputValue> values, Context context) throws IOException, InterruptedException {
         map.clear();//清空map，因为map是在外面定义的，每一个key都需要调用一次reduce方法，也就是说上次操作会保留map中的key-value
-
-        for(TimeOutputValue tv : values){//循环
-            this.unique.add(tv.getId());//将uuid取出添加到set中进行去重操作
+        //循环,把迭代器中的value的值遍历出来
+        for(TimeOutputValue tv : values){
+            //通过value的值.getId()方法,获取uuid
+            //将uuid取出添加到set中进行去重操作
+            this.unique.add(tv.getId());
         }
 
         //构造输出的value

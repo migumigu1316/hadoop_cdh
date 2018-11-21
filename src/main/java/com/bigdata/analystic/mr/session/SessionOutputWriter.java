@@ -33,11 +33,9 @@ public class SessionOutputWriter implements IOutputWriter {
             OutputWritable v = (OutputWritable) value;
 
             //TODO 获取sessions
-            int sessions =
-                    ((IntWritable) (v.getValue().get(new IntWritable(-1)))).get();
+            int sessions = ((IntWritable) (v.getValue().get(new IntWritable(-1)))).get();
             //TODO 获取sessions_length
-            int sessionsLength = ((IntWritable) ((OutputWritable) value).
-                    getValue().get(new IntWritable(-2))).get();
+            int sessionsLength = ((IntWritable) ((OutputWritable) value).getValue().get(new IntWritable(-2))).get();
 
             int i = 0;
             ps.setInt(++i, iDimension.getDimensionIdByObject(k.getStatsCommonDimension().getDateDimension()));
@@ -54,6 +52,7 @@ public class SessionOutputWriter implements IOutputWriter {
             ps.setInt(++i, sessions);
             ps.setInt(++i, sessionsLength);
 
+            System.out.println(ps);
 
             ps.addBatch();//添加到批处理中，批量执行SQL语句
         } catch (Exception e) {

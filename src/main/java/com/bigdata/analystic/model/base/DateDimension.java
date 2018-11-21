@@ -18,11 +18,11 @@ import java.util.Objects;
  */
 public class DateDimension extends BaseDimension {
     private int id;
-    private int year;
-    private int season;
-    private int month;
-    private int week;
-    private int day;
+    private int year;//年
+    private int season;//季度
+    private int month;//月
+    private int week;//周
+    private int day;//天
     private String type;
     private Date calendar = new Date();
 

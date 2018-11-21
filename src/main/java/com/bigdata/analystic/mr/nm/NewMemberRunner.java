@@ -107,7 +107,9 @@ public class NewMemberRunner implements Tool {
     /**
      * 1、获取运行当天的日期，然后再获取到运行当天前一天的日期，然后获取对应时间维度Id
      * 2、当对应时间维度Id都大于0，则正常计算：查询前一天的新增总用户，获取当天的新增用户
-     *
+     * 前一天的总会员+今天的新增会员作为今天的总会员数。
+     * 如果是计算月维度的总会员，那么就是拿上个月这个维度的总会员 + 这个月维度下的新增会员
+     * 作为这个月维度下的总会员。
      * @param job
      */
     private void computeNewTotalMember(Job job) {

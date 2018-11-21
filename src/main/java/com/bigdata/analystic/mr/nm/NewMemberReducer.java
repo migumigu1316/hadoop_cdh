@@ -20,8 +20,7 @@ import java.util.*;
  * @Author: xqg
  * @Date: 2018/11/8 15:25
  */
-public class NewMemberReducer
-        extends Reducer<StatsUserDimension, TimeOutputValue, StatsUserDimension, OutputWritable> {
+public class NewMemberReducer extends Reducer<StatsUserDimension, TimeOutputValue, StatsUserDimension, OutputWritable> {
     private static final Logger logger = Logger.getLogger(NewMemberReducer.class);
     private OutputWritable v = new OutputWritable();
     private Set<String> unique = new HashSet();//用于去重，利用HashSet
@@ -37,8 +36,8 @@ public class NewMemberReducer
         for(TimeOutputValue tv : values){
             /*this.unique.add(tv.getId());//将uuid取出添加到set中进行去重操作
             this.li.add(tv.getTime());*/
-            if(li.containsKey(tv.getId())){
-                li.get(tv.getId()).add(tv.getTime());
+            if(li.containsKey(tv.getId())){//判断是否存在这个memberId
+                li.get(tv.getId()).add(tv.getTime());//获取memberId,添加时间戳
             } else {
                 List<Long> list = new ArrayList<Long>();
                 list.add(tv.getTime());

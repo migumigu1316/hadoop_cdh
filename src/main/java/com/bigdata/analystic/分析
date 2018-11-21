@@ -7,6 +7,19 @@
 第四步: 写model.value里面的map和reduce
 
 NewUser 和 TotalUser
+
+业务逻辑:
+新增用户:
+TODO 计算launch事件中uuid唯一的个数,launch事件,en = e_l的事件
+=====>触发条件,第一次登陆,或者清空缓存
+总用户:
+ 1、根据运行当天获取日期
+ 2、获取日期和前一天的对应的时间维度
+ 3、根据时间维度获取对应的时间维度ID
+ 4、根据前天的时间维度Id获取前天的新增总用户，根据当天的时间维度Id获取当天的 新增用户
+ 5、更新当天的新增总用户
+
+
 计算规则:
   new_install_user计算规则：计算launch事件中，uuid的唯一个数。
   total_user计算规则：同一个维度，前一天的总用户+当天新增用户。(只按照天来统计数据，但是提供按照其他时间维度统计的方式)
@@ -23,7 +36,15 @@ NewUser 和 TotalUser
    b. 实现MR
 5、实现统计total_user的用户数。
 6、测试
+
+
+第一步:写所有维度的顶级父类
+第二步:写维度类,DataDimension,PlatformDimension等
+第三步:基础维度类
 ----------------------------------------------------------------------------
+业务逻辑:
+当天所有数据中，uuid的去重个数。
+
 active_user
    active_user计算规则：当天所有数据中，uuid的去重个数。
   最终数据保存：stats_user和stats_device_browser。
@@ -37,9 +58,17 @@ active_user
 4、编写collector类和给定输出配置(xml).
 5、测试
 ------------------------------------------------------------------------------
+新增会员:
+业务逻辑:
+    新增会员统计类似新增用户统计，也是统计新增u_mid的个数，在新增用户统计中，
+    我们是统计launch事件中，uuid的唯一个数，那么在新增会员中，我们是统计所有
+    事件中的第一次访问网站的会员id的去重个数(第一次访问网站定义为: 在日志收集
+    模块上线后，第一次访问网站的均作为新会员)。
+
+
 new_member
 计算规则:
-新会员(new_member)计算规则：计算当天(由维度信息确定)的所有数据中的member id，
+新会员(new_member)计算规则：计算当天(由维度信息确定)的所有数据中的memberId，
 要求member id以前没有访问过网站(在日志收集模块上线后没法访问过)，
 统计这部分的member id格式作为新会员的数量值。所有要求我们保存member id到某个数据库中，
 在这里有两种比较好的方法，第一种将会员信息保存到hbase中，以会员id作为rowkey，这样方式方便获取。
@@ -55,7 +84,7 @@ new_member
 
 计算规则:
 活跃会员(active_member)计算规则：计算当天(确定时间维度信息)的pageview事件的数据中memberid的去重个数.
-(这里只所以选择pageview事件，是可能会存在一种可能：某个会员在当天没有进行任何操作，但是他订单支付
+(这里之所以选择pageview事件，是可能会存在一种可能：某个会员在当天没有进行任何操作，但是他订单支付
 成功的操作在今天在被触发，这样在所有数据中就会出现一个java_server平台产生的订单支付成功事件，包含会员id)。
   最终数据保存：stats_user和stats_device_browser。涉及到的列(除了维度列和created列外)：active_members。
   涉及到其他表有dimension_platform、dimension_date、dimension_browser。
@@ -160,10 +189,24 @@ PV
   统计的最终数据保存到表：stats_inbound表的active_users、sessions以及bounce_sessions三列上。
   涉及到其他表有：dimension_platform、dimension_date以及dimension_inbound。
 
+==========================================================================================
+外链跳出会话计算规则如下：
+跳出会话，不仅仅只需要inbound进入的页面数据，而且还需要后续的普通页面。
+platform+date inboundid(0表示普通页面) + sid + servertime： map阶段输出
+reducer阶段工作：
+	1. 按照sid进行分组操作，放到map集合中
+	2. 针对map集合中的单个会话集合数据进行按照时间排序
+	3. 计算跳出会话个数
+
+解决方案：
+	采用二次排序来避免在reducer阶段的大量内存操作。
+	platform+date+sid+servertime inboundid： map阶段输出
+	platform+date进行分组，先按照platform+date进行排序，然后按照sid排序，最后按照serverTime排序。
+==========================================================================================
 编码步骤:
   由于计算跳出会话的规则和计算活跃用户&总会话的规则不一样，所以这里我们采用两个不同mapreduce程序来计算统计数据。
 1. 在mysql中执行文件..\文档\dimension_inbound.sql
-2. 将文件..\文档\0531.log上传到hdfs上的/logs/05/31文件夹中，然后运行AnalyserLogDataRunner类并指定时间为2017-05-31。
+2. 将文件..\文档\1113.log上传到hdfs上的/logs/11/13文件夹中，然后运行AnalyserLogDataRunner类并指定时间为2018-11-13。
 3. 编写操作dimension inbound相关类
 4. 编写统计活跃用户及总会话的mr程序
 5. 测试

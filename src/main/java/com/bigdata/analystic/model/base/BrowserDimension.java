@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * 浏览器维度类
+ * TODO 浏览器维度类
  */
 public class BrowserDimension extends BaseDimension {
     private int id;

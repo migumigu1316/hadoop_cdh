@@ -10,9 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 获取基础维度ID的实现
  * @ClassName: IDimensionImpl
- * @Description: TODO
+ * @Description: TODO 获取基础维度ID的实现
  * @Author: xqg
  * @Date: 2018/11/4 11:09
  */

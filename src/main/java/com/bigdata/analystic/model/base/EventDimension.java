@@ -1,19 +1,15 @@
 package com.bigdata.analystic.model.base;
 
-import com.bigdata.common.GlobalConstants;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Objects;
+
 //TODO 第一步:event维度的基础类
 
 /**
- * 地域维度类
- *
  * @ClassName: EventDimension
- * @Description: TODO 地域维度的基础类
+ * @Description: TODO Event事件维度的基础类
  * @Author: xqg
  * @Date: 2018/11/16 23:45
  */
@@ -61,6 +57,7 @@ public class EventDimension extends BaseDimension {
         if (tmp != 0) {
             return tmp;
         }
+
         tmp = this.category.compareTo(other.category);
         if (tmp != 0) {
             return tmp;

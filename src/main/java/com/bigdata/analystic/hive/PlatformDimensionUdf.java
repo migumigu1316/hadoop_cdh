@@ -1,6 +1,5 @@
 package com.bigdata.analystic.hive;
 
-import com.bigdata.analystic.model.base.EventDimension;
 import com.bigdata.analystic.model.base.PlatformDimension;
 import com.bigdata.analystic.mr.service.IDimension;
 import com.bigdata.analystic.mr.service.implement.IDimensionImpl;

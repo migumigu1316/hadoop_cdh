@@ -63,13 +63,15 @@ public class ActiveUserMapper extends Mapper<LongWritable, Text, StatsUserDimens
                 return;
             }
 
-            //构造输出的key
+            //构造输出的value
             long stime = Long.valueOf(serverTime);//时间
-            //TODO 一定要设置,时间
-            this.v.setTime(stime);
+            this.v.setTime(stime);//TODO 一定要设置,时间
+
+            //构造输出的key
             PlatformDimension platformDimension = PlatformDimension.getInstance(platform);//平台
             DateDimension dateDimension = DateDimension.buildDate(stime, DateEnum.DAY);
             StatsCommonDimension statsCommonDimension = this.k.getStatsCommonDimension();
+
             //为StatsCommonDimension设值
             statsCommonDimension.setDateDimension(dateDimension);
             statsCommonDimension.setPlatformDimension(platformDimension);
@@ -77,7 +79,7 @@ public class ActiveUserMapper extends Mapper<LongWritable, Text, StatsUserDimens
             //用户模块活跃用户
             //设置默认的浏览器对象(因为活跃用户指标并不需要浏览器维度，所以赋值为空)
             BrowserDimension defaultBrowserDimension = new BrowserDimension("", "");
-            statsCommonDimension.setKpiDimension(activeUserKpi);
+            statsCommonDimension.setKpiDimension(activeUserKpi);//Kpi赋值
             this.k.setBrowserDimension(defaultBrowserDimension);
             this.k.setStatsCommonDimension(statsCommonDimension);
             this.v.setId(uuid);
@@ -86,14 +88,14 @@ public class ActiveUserMapper extends Mapper<LongWritable, Text, StatsUserDimens
 
             //TODO 输出小时统计的数据
             //不要写在浏览器的下面,和浏览器没关系
-            statsCommonDimension.setKpiDimension(hourlyActiveUserKpi);
+            statsCommonDimension.setKpiDimension(hourlyActiveUserKpi);//Kpi赋值
             //这里必须设置,不然reduce端用不了
             this.k.setStatsCommonDimension(statsCommonDimension);
             //统计小时的输出
             context.write(this.k, this.v);
 
             //浏览器模块活跃用户
-            statsCommonDimension.setKpiDimension(activeBrowserUserKpi);
+            statsCommonDimension.setKpiDimension(activeBrowserUserKpi);//Kpi赋值
             BrowserDimension browserDimension = new BrowserDimension(browserName, browserVersion);
             this.k.setBrowserDimension(browserDimension);
             this.k.setStatsCommonDimension(statsCommonDimension);
